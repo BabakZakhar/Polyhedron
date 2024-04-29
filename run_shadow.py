@@ -15,8 +15,8 @@ try:
         p.draw(tk=tk)
         delta_time = time() - start_time
         print(f"Изображение полиэдра '{name}' заняло {delta_time} сек.")
-        print(f"Сумма длин проекций ребер, концы и серидина которых —
-              хорошие точки: {p.good_sum}")
+        print("Сумма длин проекций ребер, концы "
+              f"и серидина которых — хорошие точки: {p.good_sum}")
         input("Hit 'Return' to continue -> ")
 except (EOFError, KeyboardInterrupt):
     print("\nStop")
