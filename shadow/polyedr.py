@@ -165,27 +165,27 @@ class Polyedr:
 
     # проверка, "хорошее" ли ребро
     def is_good(self, beg, fin):
-        return not (abs(beg.x) < 1.0 * self.c and abs(beg.y) < 1.0 * self.c
-                    and abs(fin.x) < 1.0 * self.c and
-                    abs(fin.y) < 1.0 * self.c and abs((beg.x+fin.x)/2) <
-                    1.0 * self.c and abs((beg.y+fin.y)/2) < 1.0 * self.c) \
-                        and (abs(beg.x) < 2.0 * self.c and abs(beg.y) <
-                             2.0 * self.c
-                             and abs(fin.x) < 2.0 * self.c and
-                             abs(fin.y) < 2.0 * self.c and
+        return not (abs(beg.x) <= 0.5 * self.c and abs(beg.y) <= 0.5 * self.c
+                    and abs(fin.x) <= 0.5 * self.c and
+                    abs(fin.y) <= 0.5 * self.c and abs((beg.x+fin.x)/2) <=
+                    0.5 * self.c and abs((beg.y+fin.y)/2) <= 0.5 * self.c) \
+                        and (abs(beg.x) < 1.0 * self.c and abs(beg.y) <
+                             1.0 * self.c
+                             and abs(fin.x) < 1.0 * self.c and
+                             abs(fin.y) < 1.0 * self.c and
                              abs((beg.x+fin.x)/2)
-                             < 2.0 * self.c and abs((beg.y+fin.y)/2)
-                             < 2.0 * self.c)
+                             < 1.0 * self.c and abs((beg.y+fin.y)/2)
+                             < 1.0 * self.c)
 
     # Метод изображения полиэдра
     def draw(self, tk="skip", show=True):  # pragma: no cover
         if show:
             tk.clean()
             # изображение квадратов
+            tk.draw_rect(R3(0.5, 0.5, 0.0) * self.c,
+                         R3(-0.5, -0.5, 0.0) * self.c)
             tk.draw_rect(R3(1.0, 1.0, 0.0) * self.c,
                          R3(-1.0, -1.0, 0.0) * self.c)
-            tk.draw_rect(R3(2.0, 2.0, 0.0) * self.c,
-                         R3(-2.0, -2.0, 0.0) * self.c)
         for e in self.edges:
             for f in self.facets:
                 e.shadow(f)
@@ -197,3 +197,4 @@ class Polyedr:
                                        e.r3(s.beg).z) ** 2) ** 0.5
                 if show:
                     tk.draw_line(e.r3(s.beg), e.r3(s.fin))
+        self.good_sum /= self.c
